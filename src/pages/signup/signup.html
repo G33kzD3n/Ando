@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="danger">
+    <ion-title>Todist</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="regForm" (ngSubmit)="onRegister(regForm.value)">
+    <ion-list>
+        <ion-item>
+            <ion-icon   item-left name="people"> </ion-icon>
+            <ion-input  ng-class="{highlight: regForm.name.$error.required}" name="name" type="text" placeholder="Name Input" formControlName="name"></ion-input>
+    </ion-item>
+    <div class="errorBox" *ngIf="regForm.controls['name'].hasError('required')  && regForm.controls['name'].touched">
+    *Name is required.
+    </div>
+    <div class="errorBox" *ngIf="regForm.controls['name'].hasError('minlength') && regForm.controls['name'].touched">
+    *Name must be more then 2 charcters atleast.
+    </div>
+     <ion-item>
+            <ion-icon  item-left name="mail"></ion-icon>
+            <ion-input type="email" placeholder="Email Input" formControlName="email"></ion-input>
+    </ion-item>
+    <div class="errorBox" *ngIf="regForm.controls['email'].hasError('required') && regForm.controls['email'].touched">
+    *Email is required.
+    </div>
+    <div class="errorBox" *ngIf="regForm.controls['email'].hasError('pattern') && regForm.controls['email'].touched">
+    *Enter valid email.
+    </div>
+    <ion-item>
+            <ion-icon  item-left name="call"></ion-icon>
+            <ion-input type="number" placeholder="Mobile No Input"  formControlName="mobileNo" required></ion-input>
+    </ion-item>
+    <div class="errorBox" *ngIf="regForm.controls['mobileNo'].hasError('required')  && regForm.controls['mobileNo'].touched">
+    *Mobile No. is required.
+    </div>
+    <div class="errorBox" *ngIf="regForm.controls['mobileNo'].hasError('minlength') || regForm.controls['mobileNo'].hasError('maxlength')  && regForm.controls['mobileNo'].touched">
+    *Enter valid Mobile No.
+    </div>
+    <ion-item>
+            <ion-icon  item-left name="key"></ion-icon>
+            <ion-input type="text" placeholder="Password Input" formControlName="password" ></ion-input>
+    </ion-item>
+    <ion-item>
+            <ion-icon  item-left name="key"></ion-icon>
+            <ion-input type="text" placeholder="Confirm Password Input" formControlName="confirmPassword"  required></ion-input>
+    </ion-item> 
+    <p>
+    <button [disabled]="!regForm.valid" ion-button icon-right block type="submit">Register
+    </button></p>
+  </ion-list>
+  </form>
+</ion-content>
