@@ -8,7 +8,6 @@
     <ion-title>{{pageTitle}}</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content padding>
   <form  [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" >
     <ion-list no-lines inset>
@@ -16,17 +15,30 @@
             <ion-label  color="primary" stacked >Email</ion-label>
             <ion-input type="text" placeholder="Email Input" formControlName="email"  redquired></ion-input>
     </ion-item>
+    <div class="errorBox" *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">
+      *Email is required.
+    </div>
+    <div class="errorBox" *ngIf="loginForm.controls['email'].hasError('pattern') && loginForm.controls['email'].touched">
+      *Email incorrect.
+    </div>
     <ion-item>
             <ion-label  color="primary" stacked >Password</ion-label>
             <ion-input type="text" placeholder="Password Input" formControlName="password" ></ion-input>
     </ion-item>
+    <div class="errorBox" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['email'].touched">
+      *Password is required.
+    </div>
+    <div class="errorBox" *ngIf="loginForm.controls['password'].hasError('minlength') && loginForm.controls['password'].touched">
+      *Password incorrect. 
+    </div>
     </ion-list>
     <button  ion-button icon-right block [disabled]="!loginForm.valid" type="submit">Login<ion-icon name="computer"></ion-icon></button>
+    <div class="errorBox" *ngIf="Message">
+      {{Message}}
+    </div>
   </form>
     <p id="links">
       <a (click)="forgotPassword()">Forgot Password</a>
       <a  (click)="registerUser()" id="signup">SignUp Here.</a>
     </p>
-    <p> {{Message}}</p>
-
 </ion-content>

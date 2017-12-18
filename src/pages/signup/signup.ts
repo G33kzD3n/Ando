@@ -14,8 +14,7 @@ export class SignupPage {
     regForm    : FormGroup;
 
   constructor(public navCtrl: NavController, public navParam: NavParams, public formbuilder : FormBuilder ) {
-    //this.pageTitle =this.navParam.get('title');
-     this.regForm =  formbuilder.group({
+     this.regForm = this.formbuilder.group({
         "name"               : ['', Validators.compose( [
                                     Validators.required,
                                     Validators.minLength(2),
@@ -29,8 +28,18 @@ export class SignupPage {
                                     Validators.minLength(10),
                                     Validators.maxLength(10),
                                     Validators.pattern(/[0-9]*/ )] )],
-        "password"           : ['' ],
-        "confirmPassword"    : [''],
+       "password"           : ['',  Validators.compose([
+                                    Validators.required,
+                                    Validators.minLength(8),
+                                    Validators.maxLength(10),
+                                  // Validators.pattern(/[0-9]*/)
+                                ])],
+       "confirmPassword"    : ['', Validators.compose([
+                                   Validators.required,
+                                   Validators.minLength(8),
+                                   Validators.maxLength(10),
+                                    // Validators.pattern(/[0-9]*/)
+                                  ])],
       });
   }
 

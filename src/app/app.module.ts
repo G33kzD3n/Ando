@@ -1,10 +1,8 @@
 import { StatusBar } from '@ionic-native/status-bar';
 import { NgModule, ErrorHandler } from '@angular/core';
-import { LoginProvider } from '../providers/login/login';
 import { BrowserModule } from '@angular/platform-browser';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -16,7 +14,8 @@ import { SignupPage } from '../pages/signup/signup';
     MyApp,
     HomePage,
     LoginPage,
-    SignupPage
+    SignupPage,
+
   ],
   imports: [
     BrowserModule,
@@ -34,7 +33,6 @@ import { SignupPage } from '../pages/signup/signup';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    LoginProvider
   ]
 })
 export class AppModule {}

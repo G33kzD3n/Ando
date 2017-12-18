@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+// import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { MenuPage} from '../menu/menu';
 import { LoginPage} from '../login/login';
 
 @Component({
@@ -10,14 +9,15 @@ import { LoginPage} from '../login/login';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  public pageTitle : string;
-  email :any;
+  public pageTitle  : string;
+  public userName   : string;
   content :any;
   constructor(public navCtrl : NavController, public navParam : NavParams )
   {
-    // this.email= navParam.get('userEmail');
-    // this.pageTitle = navParam.get('pageTitle');
-    this.pageTitle="HomePage";
+  }
+  ionViewWillEnter(): void {
+    this.pageTitle = this.navParam.get('pageTitle');
+    this.userName=this.navParam.get('userName');
   }
   showProfile(){
     this.pageTitle="Profile";

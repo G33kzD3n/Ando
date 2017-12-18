@@ -1,4 +1,4 @@
-import { Component , Input} from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
@@ -11,48 +11,109 @@ import { SignupPage } from '../signup/signup';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-   @Input() userName;
+  users = [{
+    id: 1,
+    name: "Nadeem",
+    email: "nadeem@gmail.com",
+    mobileNo: 9018556691,
+    password: "stranger"
+  },
+  {
+    id: 2,
+    name: "Sami",
+    email: "sami@gmail.com",
+    mobileNo: 9018556691,
+    password: "stranger"
 
-    public loginForm                 : FormGroup;
-    public Message                  : any;
-    public pageTitle                : string;
-    // Flag to hide the form upon successful completion of remote operation
-    public hideMessage              : boolean = false;
-    public hide                     : boolean = true;
-    public userEmail                : string;
-    public userPassword             : string;
+  },
+  {
+    id: 3,
+    name: "Owais",
+    email: "owais@gmail.com",
+    mobileNo: 9018556691,
+    password: "stranger"
+  }
+  ];
+    public loginForm : FormGroup;
+    public Message   : any;
+    public pageTitle : string;
+    public userName  : string;
 
   constructor(public navCtrl        : NavController,
-              public navParams      : NavParams,
+              public navParam       : NavParams,
               public formbuilder    : FormBuilder)
   {
       this.loginForm = formbuilder.group({
-         "email"                    : ["", Validators.required ],
-         "password"                  : ["", Validators.required]
-      });
+        "email"     : ['',Validators.compose([
+                          Validators.required,
+                          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)])],
+        "password"  : ['',Validators.compose([
+                          Validators.required,
+                          Validators.minLength(8)
+                      ])], 
+            });
   }
 
+  ionViewWillEnter(): void {
+    this.pageTitle = "Login Here";
+    this.Message = this.navParam.get('Message');
+  }
+ 
+  /**
+   * @param user is user object recieved from form .
+   * @returns A boolean response , True if user found, else default value.
+   */
+  public isUserFound(user:any) {
+    var UserFound: boolean = false;
+    this.users.forEach(obj => {
+      if (obj.email === user.email  && obj.password === user.password) {
+        UserFound = true;
+        return UserFound;
+      }
+    });
+    return UserFound; //default value returned
+  } 
+
+  /**
+   * @param value input form values 
+   * Logs in authorised user to homePage 
+   * For unauthorised user prompts message at  login
+   */
   onSubmit(value : any )
-  {
-    this.userEmail=this.loginForm.controls['email'].value;
-    this.userPassword=this.loginForm.controls['password'].value;
-    this.pageTitle="HomePage";
-    this.navCtrl.setRoot(HomePage ,{
-        pageTitle : this.pageTitle,
-        userEmail :this.userEmail
+  { 
+    let user = {
+      email    : this.loginForm.controls['email'].value,
+      password : this.loginForm.controls['password'].value
+    };   
+    if ( this.isUserFound(user) ){
+      this.userName = this.getUserName(user.email);
+      this.navCtrl.setRoot(HomePage ,{
+      pageTitle : "Home Page",
+      userName : this.userName
     });
   }
-  ionViewWillEnter(): void{
-    this.pageTitle="new login";
-    this.Message="";
+  else{
+      this.navCtrl.setRoot(LoginPage,{
+        Message : "*Email/Password incorrect."
+      });
   }
+}
   forgotPassword() : void {
       this.Message = "forgotPassword";
     console.log(this.Message);
   }
-
   registerUser() : void {
     this.navCtrl.push(SignupPage,{
       'title' : "Sign" });
   }
+
+public getUserName(key:string){
+  let name : string  ="";  
+  this.users.forEach( user => {
+    if(user.email === key){
+        return name=user.name;
+    }
+  });
+  return name;
+ }
 }
