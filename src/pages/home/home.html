@@ -1,36 +1,24 @@
 <ion-header>
-  <ion-navbar color="danger">
-    <ion-buttons left>
-      <button  ion-button icon-only class="menu" menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title >{{pageTitle}}</ion-title>
-
-  </ion-navbar>
-</ion-header>
-<ion-menu  [content]="content">
-  <ion-header>
-    <ion-toolbar color="dark">
-      <ion-title >Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <button ion-item (click)="closeMenu()">
-        Home
-      </button>
-      <button ion-item (click)="showProfile()">
-        Profile
-      </button>
-      <button ion-item (click)="logout()">
-        Logout
-      </button>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
-<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
+<ion-navbar color="danger">
+  <ion-buttons left>
+    <button ion-button icon-only class="menu" menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-title>{{pageTitle}}</ion-title>
 <ion-content padding>
- <h3>{{userName + " welcome. "}}</h3>
+  <div *ngIf="profilePagesIsActive">
+    <p>Welcome </p>
+  </div>
+  <div *ngIf="homePageIsActive">
+    <form>
+      <ion-list>
+          <ion-item>
+            <ion-input type="textarea" placeholder="Write your Question?"> </ion-input>
+          </ion-item>
+          <button ion-button >Post</button>
+      </ion-list>
+    </form>
+  </div>
+  
 </ion-content>
