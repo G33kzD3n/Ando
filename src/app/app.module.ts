@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
+import { ProfilePage } from '../pages/profile/profile';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SignupPage } from '../pages/signup/signup';
     HomePage,
     LoginPage,
     SignupPage,
+    ProfilePage
 
   ],
   imports: [
@@ -27,6 +29,7 @@ import { SignupPage } from '../pages/signup/signup';
     HomePage,
     LoginPage,
     SignupPage,
+    ProfilePage
 
   ],
   providers: [
