@@ -1,4 +1,5 @@
 import { Component ,} from '@angular/core';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 
 @Component({
@@ -10,10 +11,9 @@ export class HomePage {
   public pageTitle  : string;
 
 
-  constructor()
+  constructor(private navParam : NavParams)
   { 
-    
+    this.pageTitle = this.navParam.get('pageTitle');
   }
-  
   
 }

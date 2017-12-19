@@ -11,8 +11,7 @@ import { LoginPage } from "../login/login";
 })
 export class MenuPage {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any = HomePage;
-  public pageTitle: string;
+  public rootPage: any = HomePage;
   public pages: Array<{ title: string, component: any, icon: any }>;
   
   constructor(public navCtrl: NavController, public navParam: NavParams, public alertCtrl: AlertController) {
@@ -51,6 +50,7 @@ export class MenuPage {
     }
     else
       this.nav.setRoot(page.component, {
+        pageTitle:page.title,
         userName: this.navParam.get('userName')
       });
   }
