@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { HomePage } from '../home/home';
+import { MenuPage } from '../menu/menu';
 import { SignupPage } from '../signup/signup';
 
 @IonicPage()
@@ -84,8 +84,8 @@ export class LoginPage {
     };   
     if ( this.isUserFound(user) ){
       this.userName = this.getUserName(user.email);
-      this.navCtrl.setRoot(HomePage ,{
-        pageTitle : "Home Page",
+      this.navCtrl.push(MenuPage ,{
+        pageTitle : "Home",
         userName : this.userName
       });
     }

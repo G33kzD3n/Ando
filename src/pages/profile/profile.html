@@ -1,8 +1,20 @@
 <ion-header>
   <ion-navbar color="danger">
+    <button ion-button icon-only class="menu" menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>{{pageTitle}}</ion-title>
-    </ion-navbar>
-    </ion-header>
-<ion-content padding>
-  welcome to profile {{userName}}
+  </ion-navbar>
+</ion-header>
+<ion-content class="card-background-page">
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Welcome {{userName}}
+        </ion-card-title>
+        <p>
+          The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
+        </p>
+      </ion-card-content>
+    </ion-card>
 </ion-content>

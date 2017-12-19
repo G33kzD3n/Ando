@@ -9,10 +9,12 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { ProfilePage } from '../pages/profile/profile';
+import { MenuPage } from '../pages/menu/menu';
 
 @NgModule({
   declarations: [
     MyApp,
+    MenuPage,
     HomePage,
     LoginPage,
     SignupPage,
@@ -26,6 +28,7 @@ import { ProfilePage } from '../pages/profile/profile';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    MenuPage,
     HomePage,
     LoginPage,
     SignupPage,
