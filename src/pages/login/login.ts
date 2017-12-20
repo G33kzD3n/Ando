@@ -44,19 +44,20 @@ export class LoginPage {
     {
       this.loginForm = formbuilder.group({
         "email"     : ['',Validators.compose([
-          Validators.required,
-          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)])],
-          "password"  : ['',Validators.compose([
-            Validators.required,
-            Validators.minLength(8)
-          ])], 
-        });
+                          Validators.required,
+                          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)])],
+        "password"  : ['',Validators.compose([
+                          Validators.required,
+                          Validators.minLength(8)
+        ])], 
+      });
     }
       
   ionViewWillEnter(): void {
     this.pageTitle = "Login Here";
     this.Message = this.navParam.get('Message');
   }
+ 
   /**
    * @param {any} user  is a object recieved from form .
    * @returns A boolean response , True if user found, else default value.

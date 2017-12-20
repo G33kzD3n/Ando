@@ -6,38 +6,41 @@
     <ion-title>Home</ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content class="card-background-page">
-  <ion-card>
-    <img src="#" />
+  <ion-card *ngFor="let post of posts">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{post.avatar}}">
+      </ion-avatar>
+      <h2>{{post.author}}</h2>
+      <p>{{post.date}}</p>
+    </ion-item>
+  
+    <img src="{{post.pic}}">
+  
     <ion-card-content>
-      <ion-card-title>
-        Nine Inch Nails Live
-      </ion-card-title>
-      <p>
-        The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
-      </p>
+      <p>{{post.content}}</p>
     </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <img src="#" />
-    <ion-card-content>
-      <ion-card-title>
-        Nine Inch Nails Live
-      </ion-card-title>
-      <p>
-        The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
-      </p>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <img src="#" />
-    <ion-card-content>
-      <ion-card-title>
-        Nine Inch Nails Live
-      </ion-card-title>
-      <p>
-        The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
-      </p>
-    </ion-card-content>
+  
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>{{post.likes+ " Likes"}}</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>{{post.comments +" Comments"}}</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          {{post.time}}h ago
+        </ion-note>
+      </ion-col>
+    </ion-row>
   </ion-card>
 </ion-content>

@@ -1,5 +1,6 @@
 import { StatusBar } from '@ionic-native/status-bar';
 import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpModule } from "@angular/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -10,6 +11,8 @@ import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { ProfilePage } from '../pages/profile/profile';
 import { MenuPage } from '../pages/menu/menu';
+import { PostDataProvider } from '../providers/post-data/post-data';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { MenuPage } from '../pages/menu/menu';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

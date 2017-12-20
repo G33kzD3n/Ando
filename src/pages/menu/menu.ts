@@ -2,13 +2,15 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav, NavParams , AlertController} from 'ionic-angular';
 
 import { HomePage } from '../home/home';
-import { ProfilePage } from '../profile/profile';
 import { LoginPage } from "../login/login";
+import { ProfilePage } from '../profile/profile';
+
 @IonicPage()
 @Component({
   selector: 'page-menu',
   templateUrl: 'menu.html',
 })
+
 export class MenuPage {
   @ViewChild(Nav) nav: Nav;
   public rootPage: any = HomePage;
@@ -21,6 +23,7 @@ export class MenuPage {
       { title: 'Logout', component: LoginPage, icon: 'key' }
     ];
   }
+  
   /** 
    * @param page which is a object having title and component
    * @returns dynamically loads the view of the object recieved.  
