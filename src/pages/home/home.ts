@@ -14,7 +14,7 @@ export class HomePage {
 
 
   constructor(private navParam : NavParams , private http : Http)
-  { 
+  {
     this.pageTitle = this.navParam.get('pageTitle');
   }
 
@@ -26,6 +26,7 @@ export class HomePage {
       .map(res => res.json())
       .subscribe(data => {
           this.posts =data;
+          console.log(data);
 
         });
     }
