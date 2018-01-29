@@ -1,0 +1,84 @@
+page-question {
+  .errorBox{
+        color : red;
+        padding-top: 10px;
+
+    }
+    .mytoast{
+        padding-bottom: 40px;
+    }
+    #questionTitle{
+        margin-top: .3em;
+        color:#302f2f;
+        font-family:Helvetica,Arial,sans-serif;
+        font-size: 28px;
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: .03em;
+        line-height: 1;
+        word-break: break-word;
+      }
+      .publishedBy{
+             color:#818181;
+              font-size: 12px;
+              font-weight: bold;
+              margin-top: -10px;
+              margin-bottom: 2em;
+      }
+      .answerpublishedtime{
+            color:#818181;
+              font-size: 12px;
+              font-weight: bold;
+              margin-left: .8em;  
+              display: inline;
+      }
+      .questionBody{
+             color:#302f2f;
+              font-size: 14px;
+              margin-top: -10px;
+             letter-spacing: .1em;
+            line-height: 1.6;
+            margin-bottom: 1em;
+            word-break: break-word;
+      }
+      #username{
+        color:#00b1b3;
+        font-family: Helvetica,Arial,sans-serif;
+         font-size: 14px;
+         font-weight: bold;
+         text-decoration: none;
+         padding-left: 5px; 
+      }
+      #username:hover{
+         color:black;
+         cursor:pointer;
+          opacity: 1.0;
+         text-decoration: underline;
+      }
+       #answerusername{
+        color:#00b1b3;
+        font-family: Helvetica,Arial,sans-serif;
+         font-size: 14px;
+         font-weight: bold;
+         text-decoration: none;
+         padding-left:inherit;
+          display: inline;
+          margin-left: .2em;
+      }
+      #answerbody{
+             color:#302f2f;
+             font-size: 14px;
+             letter-spacing: .08em;
+             line-height: 1.5;
+             margin-bottom: 1em;
+             word-break: break-word;
+             line-break: strict;
+             margin-left: .5em;
+             word-wrap: normal;
+      }
+      .answers{
+         margin-bottom: 2em;
+         margin-left: -.11em;
+         
+      }
+}

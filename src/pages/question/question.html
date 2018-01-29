@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar color="danger">
+    <button end ion-button icon-only class="menu" menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title col-md-9 >Question Detail Page</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-item>
+</ion-item>
+<ion-content padding class="card-background-page">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-md-9 >
+            <h4 id="questionTitle" >{{question.title}}
+            </h4>
+        </ion-col>
+        </ion-row>
+        <ion-row >
+          <ion-col col-md-9>
+            <h4><p class="publishedBy">PUBLISHED BY
+                {{question.published_at | timeAgo }}
+                <a id="username" href="{{question.author_username}}">
+                  {{question.author_username | uppercase}}</a>
+              </p>
+            </h4>
+           </ion-col>
+         </ion-row>
+          <ion-row>
+            <ion-col col-md-9>
+            <p class="questionBody">
+              {{question.body}}
+            </p>
+         </ion-col>
+      </ion-row>
+      <ion-row *ngIf=question.answers >
+        <ion-col col-md-9 >
+          <ion-card  class="answers"  col-md-9 *ngFor="let answer of question.answers">
+            <p class="answerpublishedtime"> {{answer.published_at | timeAgo}}
+            </p>
+            <p col-md-9 id="answerusername" >{{answer.author_username | uppercase}}</p>
+            <p col-md-9 id="answerbody">{{answer.body }}</p>
+          </ion-card>
+          <form [formGroup]="answerText" (ngSubmit)="publish(answerText.value)" *ngIf=enableComment> 
+           <ion-item >
+              <ion-textarea type="text"  formControlName="answer" name="answer" redquiredplaceholder="Write Answer Here."></ion-textarea>
+            </ion-item>
+            <div class="errorBox" *ngIf="answerText.controls['answer'].hasError('required') && answerText.controls['answer'].touched">
+              *Answer is required.
+            </div>
+            <div class="errorBox" *ngIf=errormessage>
+              *{{errormessage}}
+            </div>
+           <ion-item no-lines>
+            <button ion-button icon-right block [disabled]="!answerText.valid" type="submit">{{publishAnswerButtonName}}
+              <ion-icon name=""></ion-icon>
+            </button>
+            </ion-item>
+          </form>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+
+</ion-content>

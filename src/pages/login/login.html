@@ -13,7 +13,7 @@
     <ion-list no-lines inset>
      <ion-item>
             <ion-label  color="primary" stacked >Email</ion-label>
-            <ion-input type="text" placeholder="Email Input" formControlName="email"  redquired></ion-input>
+            <ion-input type="text" placeholder="Email Input" formControlName="email" name="email"  redquired></ion-input>
     </ion-item>
     <div class="errorBox" *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">
       *Email is required.
@@ -23,7 +23,7 @@
     </div>
     <ion-item>
             <ion-label  color="primary" stacked >Password</ion-label>
-            <ion-input type="text" placeholder="Password Input" formControlName="password" ></ion-input>
+            <ion-input type="text"  name="password" placeholder="Password Input" formControlName="password" ></ion-input>
     </ion-item>
     <div class="errorBox" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['email'].touched">
       *Password is required.

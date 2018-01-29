@@ -1,3 +1,76 @@
 page-home {
+    .dicussions{
+       margin-top: 15px;
+    }
+    #username {
+        color:#00b1b3;
+        font-family: Helvetica,Arial,sans-serif;
+         font-size: 13px;
+         font-weight: bold;
+          letter-spacing: .01em;
+         text-decoration: none;
+    }
+    #username:hover
+     {
+    color:black;
+    //cursor:pointer;
+     opacity: 1.0;
+     text-decoration: underline;
+     }
+    #questionTitle{
+        color:#302f2f;
+        font-family:Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: .05em;
+        line-height: 1;
+        word-break: break-word;
+    }
+    #questionTitle:hover{
+       box-shadow: none;
+       opacity: 1.0;
+        font-family:Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        text-decoration: underline;
+          cursor:pointer;
+    }
+    #By{
+         color:#818181;
+         font-weight: bold;
+         padding-right: 2px; 
+         text-decoration: none;
+         
+    }
+    #By:hover{
+        opacity:1.0;
+        box-shadow: none;
+    }
+    .Time{
+        color:#818181;
+        font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 12px;
+        line-height: 2;
+        font-weight: bold;
+        padding-left:3px;
+        padding-right: 3px;
+        text-decoration: none;
+        
+    }
+    .Time:hover{
+        color:black;
+        opacity: 1.0;
+        text-decoration: underline;
 
+    }
+    .padding_before_seconds{
+        padding-left: 30px;
+        font-family: Helvetica,Arial,sans-serif;
+    }
+    #question_body
+    {
+     color:#818181;
+     font-family: Helvetica,Arial,sans-serif;
+     text-justify: auto;
+    }
 }

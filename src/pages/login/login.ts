@@ -1,122 +1,86 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, Injectable } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { RequestOptions, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 import { MenuPage } from '../menu/menu';
 import { SignupPage } from '../signup/signup';
-
-@IonicPage()
+import { AppServiceProvider } from '../../providers/app-service/app-service';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
+@Injectable()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 })
 
 export class LoginPage {
-  users = [{
-    id: 1,
-    name: "Nadeem",
-    email: "nadeem@gmail.com",
-    mobileNo: 9018556691,
-    password: "stranger"
-  },
-  {
-    id: 2,
-    name: "Sami",
-    email: "sami@gmail.com",
-    mobileNo: 9018556691,
-    password: "stranger"
-    
-  },
-  {
-    id: 3,
-    name: "Owais",
-    email: "owais@gmail.com",
-    mobileNo: 9018556691,
-    password: "stranger"
-  }
-];
-  public loginForm : FormGroup;
-  public Message   : any;
-  public pageTitle : string;
-  public userName  : string;
+  public loader: any;
+  public loginForm: FormGroup;
+  public Message: any;
+  public pageTitle: string;
 
-  constructor(public navCtrl : NavController, public navParam : NavParams, public formbuilder : FormBuilder)
-    {
-      this.loginForm = formbuilder.group({
-        "email"     : ['',Validators.compose([
-                          Validators.required,
-                          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)])],
-        "password"  : ['',Validators.compose([
-                          Validators.required,
-                          Validators.minLength(8)
-        ])], 
-      });
-    }
-      
+
+  constructor(public navCtrl: NavController, public navParam: NavParams, public formbuilder: FormBuilder,
+   private app: AppServiceProvider, private userService: UserServiceProvider, ) {
+    this.loginForm = formbuilder.group({
+      "email": ['', Validators.compose([Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)])],
+      "password": ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+    });
+  }
+
   ionViewWillEnter(): void {
     this.pageTitle = "Login Here";
     this.Message = this.navParam.get('Message');
   }
- 
+
   /**
-   * @param {any} user  is a object recieved from form .
-   * @returns A boolean response , True if user found, else default value.
-   */
-  public isUserFound(user:any) {
-    var UserFound: boolean = false;
-    this.users.forEach(obj => {
-      if (obj.email === user.email  && obj.password === user.password) {
-        UserFound = true;
-        return UserFound;
-      }
-    });
-    return UserFound; //default value returned
-  } 
-      
-  /**
-   * @param {any} value input form values 
-   * Logs in authorised user to homePage 
+   * @param {any} value input form values
+   * Logs in authorised user to homePage
    * For unauthorised user prompts message at  login
    */
-  onSubmit(value : any ){ 
-    let user = {
-      email    : this.loginForm.controls['email'].value,
-      password : this.loginForm.controls['password'].value
-    };   
-    if ( this.isUserFound(user) ){
-      this.userName = this.getUserName(user.email);
-      this.navCtrl.push(MenuPage ,{
-        pageTitle : "Home",
-        userName : this.userName
-      });
-    }
-    else{
-      this.navCtrl.setRoot(LoginPage,{
-        Message : "*Email/Password incorrect."
-      });
-    }
+  onSubmit(value: any) {
+    this.app.showLoader('Wait logging in..');
+    let retData: any = '';
+    let user: any;
+    let payload = {
+      email: this.loginForm.controls['email'].value,
+      password: this.loginForm.controls['password'].value
+    };
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    this.app.http.post(this.app.getUri() + '/login', payload, options)
+      .map(res => res.json())
+      .subscribe(
+      result => {
+        result;
+        user = result.data;
+        this.userService.setToken(user.api_token);
+        this.userService.storage.set('id', user.id);
+        this.userService.storage.set('username', user.user_name);
+      },
+      errors => {
+        retData = JSON.parse(errors._body);
+        console.log(retData);
+        if (retData) {
+          this.app.removeLoader();
+          setTimeout(() => {
+            this.app.showToast('The Email and password you entered didn\'t match our records', 'top');
+          }, 100);
+        }
+      },
+      () => {
+        this.app.removeLoader();
+        this.navCtrl.setRoot(MenuPage);
+      }
+      );
   }
-  
-  forgotPassword() : void {
+  forgotPassword(): void {
     this.Message = "forgotPassword";
     console.log(this.Message);
   }
 
-  registerUser() : void {
+  registerUser(): void {
     this.navCtrl.push(SignupPage);
-  }
-        
-  /**
-   * @param {string} key usually email , 
-   * matches the key in users and returns the username of the record whose key matched
-   */
-  public getUserName(key : any){
-    let name : string  ="";  
-    this.users.forEach( user => {
-      if(user.email === key){
-        return name=user.name;
-      }
-    });
-    return name;
   }
 }
