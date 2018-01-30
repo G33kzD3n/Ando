@@ -18,7 +18,7 @@ export class QuestionPage {
   public enableComment: any = false;
   public errormessage: string = "";
   constructor(
-    public formbuilder: FormBuilder, private userService:UserServiceProvider,
+    public formbuilder: FormBuilder, private userService: UserServiceProvider,
     private app: AppServiceProvider, private http: Http,
     public navCtrl: NavController, public navParams: NavParams) {
 
@@ -28,18 +28,17 @@ export class QuestionPage {
   }
 
   ionViewDidLoad() {
-    console.log('inside the question detail page'+this.userService.getApiToken());
-     if (this.userService.isLoggedIn() == true) {
-       this.enableComment = true;
-     }
+    console.log('inside the question detail page' + this.userService.getApiToken());
+    if (this.userService.isLoggedIn() == true) {
+      this.enableComment = true;
+    }
     this.load();
   }
   publish(value: string) {
-    let headers = new Headers({ 'Authorization': 'Bearer' + this.userService.getApiToken() });
-   // this.options = this.app.options;
+    let headers = new Headers({ 'Authorization': 'Bearer ' + this.userService.getApiToken() });
+    // this.options = this.app.options;
     if (this.publishAnswerButtonName === 'Post') {
       let payload = {
-        'api_token': this.userService.getApiToken(),
         'content': this.answerText.controls['answer'].value
       };
       let uri = this.app.getUri() + '/questions/' + this.question.id;
@@ -52,7 +51,7 @@ export class QuestionPage {
         errors => {
           let errormessage = JSON.parse(errors._body);
           this.errormessage = errormessage[0].errors.error_message.content[0];
-          this.app.showToast(this.errormessage,'top');
+          this.app.showToast(this.errormessage, 'top');
           //console.log(errormessage[0].errors.error_message.content[0]);
         },
         () => {

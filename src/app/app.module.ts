@@ -20,6 +20,7 @@ import { LogoutPage } from "../pages/logout/logout";
 import { PaginationServiceProvider } from '../providers/pagination-service/pagination-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { ErrorServiceProvider } from '../providers/error-service/error-service';
+import { MyQuestionsPage } from "../pages/my-questions/my-questions";
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { ErrorServiceProvider } from '../providers/error-service/error-service';
     TimeAgoPipe,
     QuestionPage,
     PublishQuestionPage,
+    MyQuestionsPage,
     LogoutPage,
   ],
   imports: [
@@ -51,6 +53,7 @@ import { ErrorServiceProvider } from '../providers/error-service/error-service';
     ProfilePage,
     QuestionPage,
     PublishQuestionPage,
+    MyQuestionsPage,
     LogoutPage,
 
   ],

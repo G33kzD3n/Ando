@@ -1,18 +1,48 @@
-<!--
-  Generated template for the PublishQuestionPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>PublishQuestion</ion-title>
+  <ion-navbar color="danger">
+    <button end ion-button icon-only class="menu" menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title col-md-9>Have a Question</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
-<ion-content padding>
-
+<ion-item>
+</ion-item>
+<ion-content padding class="">
+  <ion-grid>
+    <ion-row >
+      <ion-col col-md-9>  
+        <h4>What annoys you share with us.</h4>
+      </ion-col>
+    </ion-row>
+        <ion-row>
+          <ion-col col-md-9>
+        <form [formGroup]="myQuestion" (ngSubmit)="publishQuestion(myQuestion.value)">
+          <ion-item>
+            <ion-input type="text" formControlName="title" name="title" required placeholder="Write The Question Title ."></ion-input>
+          </ion-item>
+          <div class="errorBox" *ngIf="myQuestion.controls['title'].hasError('required') && myQuestion.controls['title'].touched">
+            *There must be a title for your Question.
+          </div>
+          <div class="errorBox" *ngIf="myQuestion.controls['title'].hasError('minlength') && myQuestion.controls['title'].touched">
+            *The Title must be atleast 10 characters long.
+          </div>
+          <ion-item>
+            <ion-textarea type="text" formControlName="content" name="content" required placeholder="Express your problem here & be clear."></ion-textarea>
+          </ion-item>
+          <div class="errorBox" *ngIf="myQuestion.controls['content'].hasError('required') && myQuestion.controls['content'].touched">
+            *There must be a description for your Question.
+          </div>
+          <div class="errorBox" *ngIf="myQuestion.controls['content'].hasError('minlength') && myQuestion.controls['content'].touched">
+            *The Description must be atleast 10 characters long.
+          </div>
+          <ion-item no-lines>
+            <button ion-button icon-right block [disabled]="!myQuestion.valid" type="submit">Publish 
+              <ion-icon name="create"></ion-icon>
+            </button>
+          </ion-item>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

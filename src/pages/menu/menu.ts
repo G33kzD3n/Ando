@@ -9,6 +9,7 @@ import { PublishQuestionPage } from "../publish-question/publish-question";
 import { LogoutPage } from '../logout/logout';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { AppServiceProvider } from '../../providers/app-service/app-service';
+import { MyQuestionsPage } from '../my-questions/my-questions';
 
 @IonicPage()
 @Component({
@@ -32,6 +33,7 @@ export class MenuPage {
       this.pages = [
         { title: 'Home', component: HomePage, icon: 'home' },
         { title: 'Publish Question', component: PublishQuestionPage, icon: 'add' },
+        { title: 'My Questions', component: MyQuestionsPage, icon: 'add' },
         { title: 'Profile', component: HomePage, icon: 'person' },
         { title: 'Settings', component: HomePage, icon: 'settings' },
         { title: 'Logout', component: LogoutPage, icon: 'key' }

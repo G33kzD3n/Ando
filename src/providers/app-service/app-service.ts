@@ -32,14 +32,16 @@ export class AppServiceProvider {
   getOptions() {
     return this.options;
   }
-  showToast(data: string, position: string) {
+  showToast(data: string, position: string,delay:number=0) {
     let toast = this.toastCtrl.create({
       message: data,
       duration: 3000,
       position: position,
       cssClass: 'mytoast'
     });
-    toast.present();
+    setTimeout(() => {
+      toast.present();
+    }, delay);
 
   }
   showLoader(message: string) {

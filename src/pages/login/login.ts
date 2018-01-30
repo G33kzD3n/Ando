@@ -71,6 +71,7 @@ export class LoginPage {
       },
       () => {
         this.app.removeLoader();
+        
         this.navCtrl.setRoot(MenuPage);
       }
       );

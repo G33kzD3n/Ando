@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 import { Http } from "@angular/http";
 import { Component, } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { QuestionPage } from "../question/question";
 import { AppServiceProvider } from '../../providers/app-service/app-service';
@@ -12,12 +12,13 @@ import { AppServiceProvider } from '../../providers/app-service/app-service';
   templateUrl: 'home.html',
 })
 export class HomePage {
+  limit: any=0;
+  totalPages: number=1;
+  currentPage:number=1;
   public latestId: any;
   public paginatedUrl: any;
-  public pagination = {
-    limit: 0, total_count: 0,
-    current_page: 0, total_pages: 0
-  };
+  public pagination: any;
+  scroll: any;
   public pageTitle: string;
   public questions = [];
   public pages: Array<{ url: any, title: any }>;
@@ -26,21 +27,24 @@ export class HomePage {
   constructor(
     //private userService: UserServiceProvider,
     public app: AppServiceProvider, private http: Http,
-    public navCtrl: NavController, public navParam: NavParams,) {
-    this.app.setPageUri('/questions');
-    this.paginatedUrl = this.app.getPageUri();
+    public navCtrl: NavController, public navParam: NavParams, ) {
+    
   }
   /**
    * Pushes The given page.
    * @param uri : string
    */
+  ngOnInit(){
+  }
   pushPage(uri: string) {
     this.app.setPageUri(uri);
     this.navCtrl.push(QuestionPage);
   }
-
   ionViewWillEnter() {
+    this.app.setPageUri('/questions');
+    this.paginatedUrl=this.app.getPageUri();
     this.loadQuestions(this.paginatedUrl);
+    
   }
 
   /**
@@ -82,40 +86,39 @@ export class HomePage {
    * @param infiniteScroll 
    */
   scrollDown(infiniteScroll) {
+    this.scroll = infiniteScroll;
     this.app.showLoader('Loading wait....');
-      this.latestId = this.questions[0].id;
-      let current_page = 1 + this.pagination.current_page;
-      this.paginatedUrl = this.makePaginatedUrl(this.app.getPageUri(), this.pagination.limit, current_page);
-      if (this.pagination.current_page >= 1 && this.pagination.current_page < this.pagination.total_pages) {
-        this.http.get(this.paginatedUrl)
-          .map(res => res.json())
-          .subscribe(result => {
-            this.pagination = result[0].pagination;
-            console.log(result[0].pagination);
-            this.questions = this.questions.concat(this.questions, result[0].data);
-            if (this.noPagesLeft(this.pagination)) {
-              this.paginatedUrl = this.app.getPageUri();
-              this.app.showToast('Nothing more', 'top');
-              infiniteScroll.complete();
-              infiniteScroll.enable(false);
-            }
-          },
-          errors => {
-            this.errors = errors;
-            if (this.errors) {
-              console.log(this.app.loader);
-              this.app.removeLoader();
-              this.app.showToast('Something Went Wrong', 'top');
-              infiniteScroll.complete();
-            }
-          },
-          () => {
-            infiniteScroll.complete();
-            this.app.removeLoader();
+    this.currentPage = 1 + this.pagination.current_page;
+    this.paginatedUrl = this.makePaginatedUrl(this.app.getPageUri(),this.limit, this.currentPage);
+    if (this.pagesLeft(this.pagination)===true) {
+      this.http.get(this.paginatedUrl)
+        .map(res => res.json())
+        .subscribe(result=> {
+          this.pagination=result[0].pagination;
+          this.questions = this.questions.concat(result[0].data);
+          if (this.pagesLeft(this.pagination)==null) {
+            this.paginatedUrl = this.app.getPageUri();
+            this.app.showToast('Nothing more', 'top');
+            //this.scroll.complete();
+           this.scroll.enable(false);
           }
-          );
-      }
-      console.log('Async operation has ended');
+        },
+        errors => {
+          this.errors = errors;
+          if (this.errors) {
+            this.app.removeLoader();
+            this.app.showToast('Something Went Wrong', 'top');
+            this.scroll.complete();
+          }
+        },
+        () => {
+         this.app.removeLoader();
+          this.scroll.complete();
+        }
+        );
+    }
+   
+    console.log('Async operation has ended');
   }
 
   doRefresh(refresher) {
@@ -124,16 +127,21 @@ export class HomePage {
     this.http.get(this.app.getPageUri())
       .map(res => res.json())
       .subscribe(result => {
-        console.log(result[0].data[0].id);
-        console.log(this.latestId);
         this.paginatedUrl = this.app.getPageUri();
-        this.questions = this.questions.concat(result[0].data);
         this.pagination = result[0].pagination;
+        if (this.latestId === result[0].data[0].id) {
+          console.log('nothing new');
+          this.app.showToast('No new feeds!', 'top');
+        }
+        else {
+          this.questions = result[0].data;
+          this.latestId = this.questions[0].id;
+          this.scroll.enable(true);
+        }
       },
       errors => {
         this.errors = errors;
         if (this.errors) {
-          console.log(this.app.loader);
           this.app.removeLoader();
           this.app.showToast('Something Went Wrong', 'top');
           refresher.complete();
@@ -141,21 +149,18 @@ export class HomePage {
       },
       () => {
         this.app.removeLoader();
-        setTimeout(() => {
-          if (this.latestId === this.questions[0].id) {
-            this.app.showToast('No new feeds!', 'top');
-            refresher.complete();
-          }
-        }, 0);
+        refresher.complete();
       }
       );
     console.log('async opts ended');
   }
 
-  noPagesLeft(pagination) {
-    if (pagination.current_page < pagination.total_pages) {
-      return false;
+  pagesLeft(pagination) {
+    if (pagination.current_page > pagination.total_pages) {
+      return null;
     }
-    else return true;
+    else {
+      return true;
+    }
   }
 }
