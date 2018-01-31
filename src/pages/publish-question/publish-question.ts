@@ -34,7 +34,7 @@ export class PublishQuestionPage {
     headers.append('Authorization', 'Bearer ' + this.userService.getApiToken());
     let payload = {
       title: this.myQuestion.controls['title'].value,
-      conten: this.myQuestion.controls['content'].value
+      content: this.myQuestion.controls['content'].value
     };
     let uri = this.app.getPageUri();
     this.http.post(uri, payload, { headers: headers })
