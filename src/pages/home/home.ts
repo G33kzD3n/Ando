@@ -12,13 +12,14 @@ import { AppServiceProvider } from '../../providers/app-service/app-service';
   templateUrl: 'home.html',
 })
 export class HomePage {
-  limit: any=0;
-  totalPages: number=1;
-  currentPage:number=1;
+  public canWeLoadMoreContent: boolean;
+  public limit: any = 0;
+  public totalPages: number = 1;
+  public currentPage: number = 1;
   public latestId: any;
   public paginatedUrl: any;
   public pagination: any;
-  scroll: any;
+  public scroll: any;
   public pageTitle: string;
   public questions = [];
   public pages: Array<{ url: any, title: any }>;
@@ -28,13 +29,22 @@ export class HomePage {
     //private userService: UserServiceProvider,
     public app: AppServiceProvider, private http: Http,
     public navCtrl: NavController, public navParam: NavParams, ) {
-    
+
+  }
+  /**
+   * Makes the paginated PageUri 
+   * @param itemsPerPage 
+   * @param currentPageNo 
+   * @returns paginatedUri string
+   */
+  private makePaginatedUrl(pageUri: string, itemsPerPage: number, currentPageNo) {
+    return pageUri + '?limit=' + itemsPerPage + '&page=' + currentPageNo;
   }
   /**
    * Pushes The given page.
    * @param uri : string
    */
-  ngOnInit(){
+  ngOnInit() {
   }
   pushPage(uri: string) {
     this.app.setPageUri(uri);
@@ -42,11 +52,11 @@ export class HomePage {
   }
   ionViewWillEnter() {
     this.app.setPageUri('/questions');
-    this.paginatedUrl=this.app.getPageUri();
+    this.paginatedUrl = this.app.getPageUri();
     this.loadQuestions(this.paginatedUrl);
-    
-  }
+    this.canWeLoadMoreContent=true;
 
+  }
   /**
    * Load questions resource.
    * @param url 
@@ -73,15 +83,6 @@ export class HomePage {
       );
   }
   /**
-   * Makes the paginated PageUri 
-   * @param itemsPerPage 
-   * @param currentPageNo 
-   * @returns paginatedUri string
-   */
-  private makePaginatedUrl(pageUri: string, itemsPerPage: number, currentPageNo) {
-    return pageUri + '?limit=' + itemsPerPage + '&page=' + currentPageNo;
-  }
-  /**
    * Scroll for more questions
    * @param infiniteScroll 
    */
@@ -89,18 +90,18 @@ export class HomePage {
     this.scroll = infiniteScroll;
     this.app.showLoader('Loading wait....');
     this.currentPage = 1 + this.pagination.current_page;
-    this.paginatedUrl = this.makePaginatedUrl(this.app.getPageUri(),this.limit, this.currentPage);
-    if (this.pagesLeft(this.pagination)===true) {
+    this.paginatedUrl = this.makePaginatedUrl(this.app.getPageUri(), this.limit, this.currentPage);
+    if (this.pagesLeft(this.pagination) === true) {
       this.http.get(this.paginatedUrl)
         .map(res => res.json())
-        .subscribe(result=> {
-          this.pagination=result[0].pagination;
+        .subscribe(result => {
+          this.pagination = result[0].pagination;
           this.questions = this.questions.concat(result[0].data);
-          if (this.pagesLeft(this.pagination)==null) {
+          if (this.pagesLeft(this.pagination) === null) {
             this.paginatedUrl = this.app.getPageUri();
             this.app.showToast('Nothing more', 'top');
-            //this.scroll.complete();
-           this.scroll.enable(false);
+            this.canWeLoadMoreContent=false;
+            this.scroll.complete();
           }
         },
         errors => {
@@ -112,12 +113,12 @@ export class HomePage {
           }
         },
         () => {
-         this.app.removeLoader();
+          this.app.removeLoader();
           this.scroll.complete();
         }
         );
     }
-   
+
     console.log('Async operation has ended');
   }
 

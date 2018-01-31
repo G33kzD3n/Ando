@@ -33,7 +33,9 @@
     </p>
   </ion-item>
 </ion-list>
-<ion-infinite-scroll (ionInfinite)="scrollDown($event)">
+<ion-infinite-scroll
+*ngIf="canWeLoadMoreContent"
+(ionInfinite)="scrollDown($event)">
   <ion-infinite-scroll-content>Loding...</ion-infinite-scroll-content>
 </ion-infinite-scroll>
 </ion-content>
