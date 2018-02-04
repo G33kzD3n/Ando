@@ -7,20 +7,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
+
 import { MyApp } from './app.component';
-import { MenuPage } from '../pages/menu/menu';
 import { HomePage } from '../pages/home/home';
+import { MenuPage } from '../pages/menu/menu';
 import { LoginPage } from '../pages/login/login';
+import { LogoutPage } from "../pages/logout/logout";
 import { SignupPage } from '../pages/signup/signup';
 import { ProfilePage } from '../pages/profile/profile';
 import { QuestionPage } from "../pages/question/question";
+import { MyQuestionsPage } from "../pages/my-questions/my-questions";
+import { EditQuestionPage } from "../pages/edit-question/edit-question";
 import { AppServiceProvider } from '../providers/app-service/app-service';
-import { PublishQuestionPage } from "../pages/publish-question/publish-question";
-import { LogoutPage } from "../pages/logout/logout";
-import { PaginationServiceProvider } from '../providers/pagination-service/pagination-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { ErrorServiceProvider } from '../providers/error-service/error-service';
-import { MyQuestionsPage } from "../pages/my-questions/my-questions";
+import { PublishQuestionPage } from "../pages/publish-question/publish-question";
+import { PaginationServiceProvider } from '../providers/pagination-service/pagination-service';
+import { QuestionServiceProvider } from '../providers/question-service/question-service';
+import { AnswerServiceProvider } from '../providers/answer-service/answer-service';
+import { EditAnswerPage } from "../pages/edit-answer/edit-answer";
 
 
 @NgModule({
@@ -36,6 +41,8 @@ import { MyQuestionsPage } from "../pages/my-questions/my-questions";
     PublishQuestionPage,
     MyQuestionsPage,
     LogoutPage,
+    EditQuestionPage,
+    EditAnswerPage
   ],
   imports: [
     BrowserModule,
@@ -55,16 +62,20 @@ import { MyQuestionsPage } from "../pages/my-questions/my-questions";
     PublishQuestionPage,
     MyQuestionsPage,
     LogoutPage,
+    EditQuestionPage,
+    EditAnswerPage
 
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     AppServiceProvider,
     PaginationServiceProvider,
     UserServiceProvider,
     ErrorServiceProvider,
+    QuestionServiceProvider,
+    AnswerServiceProvider,
   ]
 })
-export class AppModule {}
+export class AppModule { }

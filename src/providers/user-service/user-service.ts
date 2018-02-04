@@ -4,8 +4,9 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class UserServiceProvider {
+  loggedIn: boolean = false;
   private authToken: string;
-  constructor( public storage: Storage) {
+  constructor(public storage: Storage) {
     this.authToken = null;
   }
   getApiToken() {
@@ -13,7 +14,6 @@ export class UserServiceProvider {
   }
   setToken(token: string) {
     this.storage.set('token', token);
-    this.authToken = token;
   }
   flushStorage() {
     this.storage.clear();
@@ -25,11 +25,4 @@ export class UserServiceProvider {
     });
     return userToken = userToken;
   }
-  isLoggedIn() {
-    if (this.getApiToken() === null) {
-      return false;
-    } else
-      return true;
-  }
-
 }

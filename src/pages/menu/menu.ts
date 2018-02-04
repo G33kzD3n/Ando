@@ -21,12 +21,13 @@ export class MenuPage {
   public token: any;
   public loader: any;
   @ViewChild(Nav) nav: Nav;
-  public rootPage: any = HomePage;
+  public rootPage: any;
   public pages: Array<{ title: string, component: any, icon: any }>;
   constructor(public loadingCtrl: LoadingController,
     private userService: UserServiceProvider, private app: AppServiceProvider,
     public navCtrl: NavController, public navParam: NavParams,
   ) {
+    
   }
   showMenu(loggedIn) {
     if (loggedIn === true) {
@@ -48,7 +49,22 @@ export class MenuPage {
     }
   }
   ionViewWillEnter() {
-    this.showMenu(this.userService.isLoggedIn());
+    try {
+      this.userService.getToken().then((value) => {
+        this.nav.setRoot(HomePage, { token: value });
+        this.token = value;
+        setTimeout(() => {   
+          if (this.token != null) {
+            this.showMenu(true);
+          } else {
+            this.showMenu(false);
+          }
+        },3000);
+      });
+    } catch (e) {
+      //this.nav.setRoot(HomePage);
+      console.log('Something went wrong');
+    }
   }
 
   /**
@@ -57,11 +73,11 @@ export class MenuPage {
    * @returns Loads the page dynamically
    */
   openPage(page: any) {
-    console.log('from open Page');
-    console.log(this.loader);
     if (page.title != "Home") {
-      this.navCtrl.push(page.component,
-        { loader: this.app.loader });
+      this.navCtrl.push(page.component, { token: this.token });
+    }
+    else {
+      this.nav.setRoot(HomePage, { token: this.token });
     }
   }
 }

@@ -1,14 +1,37 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ErrorServiceProvider {
-  constructor(public http: HttpClient) {
+   private error = {
+    message: "",
+    status: null,
+  };
+  constructor() {
     console.log('Hello ErrorServiceProvider Provider');
   }
-  parseError(errors:any){
-    if(errors.status===0){
-      return "Status_Is_Zero";
+  
+  parseErrors(errors: any) {
+    if (errors.status === 0) {
+      this.error.message = "Check your internet connection or Server is down.";
+      this.error.status = errors.status;
+    } else if(errors) {
+      let body = JSON.parse(errors._body);
+      this.error.message = "Token incorrect.";
+      this.error.status = errors.status;
     }
+    else{
+      let body = JSON.parse(errors._body);
+      this.error.message = body[0].errors.error_message;
+      this.error.status = errors.status;
+    }
+
+    return this.error;
+  }
+
+  errorMessageIs(error: any) {
+    return this.error.message;
+  }
+  errorStatusIs(error) {
+    return this.error.status;
   }
 }

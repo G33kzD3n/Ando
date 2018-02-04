@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>EditAnswer</ion-title>
+    <ion-buttons left>
+      <button start icon-only ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+        Back
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-md-9>
+        <h4>What annoys you share with us.</h4>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-md-9>
+        <form [formGroup]="myAnswer" (ngSubmit)="editAnswer(myAnswer.value)">
+          <ion-item>
+            <ion-label stacked>Edit the Answer content.</ion-label>
+            <ion-textarea type="text" formControlName="content" name="content" required value="{{answer.body}}"></ion-textarea>
+          </ion-item>
+          <div class="errorBox" *ngIf="myAnswer.controls['content'].hasError('required') && myAnswer.controls['content'].touched">
+            *There must be a content for your Answer.
+          </div>
+          <div class="errorBox" *ngIf="myAnswer.controls['content'].hasError('minlength') && myAnswer.controls['content'].touched">
+            *The Description must be atleast 10 characters long.
+          </div>
+          <ion-item no-lines>
+            <button ion-button icon-right block [disabled]="!myAnswer.valid" type="submit">Publish
+              <ion-icon name="create"></ion-icon>
+            </button>
+          </ion-item>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

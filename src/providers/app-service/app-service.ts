@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { ToastController, LoadingController } from 'ionic-angular';
+import { ToastController, LoadingController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class AppServiceProvider {
   private homePageTitle: string = "Dialogue";
-  private baseUri: string = "http://192.168.225.108:8000/api/1.0";
+  private baseUri: string = "http://192.168.42.232:8000/api/1.0";
   private pageUri: string = "";
   public loader: any;
   public options: any;
 
-  constructor(public http: Http, private toastCtrl: ToastController,
+  constructor(public http: Http, private toastCtrl: ToastController, 
     public storage: Storage, public loadingCtrl: LoadingController) {
     this.loader = this.loadingCtrl.create({
       content: ''
     });
+
   }
   getUri() {
     return this.baseUri;
@@ -54,5 +55,8 @@ export class AppServiceProvider {
     setTimeout(() => {   
       this.loader.dismiss();
     }, timmer);
+  
   }
+
+  
 }

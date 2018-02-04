@@ -5,6 +5,8 @@ import { Http, Headers } from "@angular/http";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppServiceProvider } from '../../providers/app-service/app-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
+import { QuestionServiceProvider } from '../../providers/question-service/question-service';
+import { ErrorServiceProvider } from '../../providers/error-service/error-service';
 
 @IonicPage()
 @Component({
@@ -15,9 +17,9 @@ export class PublishQuestionPage {
   public myQuestion: FormGroup;
   public errormessage: string = "";
   constructor(
-    public formbuilder: FormBuilder, private userService: UserServiceProvider,
-    private app: AppServiceProvider, private http: Http,
-    public navCtrl: NavController, public navParams: NavParams) {
+    private userService: UserServiceProvider, private questionService: QuestionServiceProvider,
+    public error: ErrorServiceProvider, private app: AppServiceProvider, private http: Http,
+    public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder) {
     this.myQuestion = formbuilder.group({
       title: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
       content: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
@@ -28,37 +30,32 @@ export class PublishQuestionPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublishQuestionPage');
   }
+  /**
+   * Create a new Question.
+   * @param value any
+   */
   publishQuestion(value: any) {
     this.app.showLoader('Wait your question is being published.');
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    headers.append('Authorization', 'Bearer ' + this.userService.getApiToken());
     let payload = {
       title: this.myQuestion.controls['title'].value,
       content: this.myQuestion.controls['content'].value
     };
     let uri = this.app.getPageUri();
-    this.http.post(uri, payload, { headers: headers })
+    this.questionService.store(uri, payload, this.navParams.get('token'))
       .map(res => res.json())
       .subscribe(
-        result => {
-        },
-
-        errors => {
-          this.app.removeLoader(2000);
-          if (errors.status == 0) {
-            this.app.showToast('Something went wrong', 'top', 2500);
-          } else {
-            this.errormessage = errors._body.error_message;
-            this.app.showToast(this.errormessage, 'top', 2500);
-            console.log(this.errormessage);
-          }
-        },
-
-        () => {
-          this.app.removeLoader(2000);
-          this.app.showToast('Your question has been posted successfully.', 'top', 2500);
-          console.log('success');
-        }
+      result => {
+      },
+      errors => {
+        this.app.removeLoader();
+        //this.app.showToast(this.error.errorMessageIs(this.error.parseErrors(errors)), 'top');
+      },
+      () => {
+        this.app.removeLoader();
+        this.app.showToast('Your question has been posted successfully.', 'top');
+        this.navCtrl.pop();
+        console.log('success');
+      }
       );
   }
 }
