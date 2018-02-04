@@ -28,7 +28,7 @@ export class PublishQuestionPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PublishQuestionPage');
+   
   }
   /**
    * Create a new Question.
