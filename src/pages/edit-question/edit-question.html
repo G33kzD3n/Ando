@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>EditQuestion</ion-title>
+    <ion-buttons left >
+      <button start icon-only ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+        Back
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-md-9>
+        <h4>What annoys you share with us.</h4>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-md-9>
+        <form [formGroup]="myQuestion" (ngSubmit)="editQuestion(myQuestion.value)">
+          <ion-item>
+            <ion-label stacked >Edit the question title.</ion-label>
+            <ion-textarea type="text" formControlName="title" name="title" required value="{{question.title}}">
+            </ion-textarea>
+            </ion-item>
+          <div class="errorBox" *ngIf="myQuestion.controls['title'].hasError('required') && myQuestion.controls['title'].touched">
+            *There must be a title for your Question.
+          </div>
+          <div class="errorBox" *ngIf="myQuestion.controls['title'].hasError('minlength') && myQuestion.controls['title'].touched">
+            *The Title must be atleast 10 characters long.
+          </div>
+          <ion-item>
+            <ion-label stacked>Edit the question content.</ion-label>
+            <ion-textarea type="text" formControlName="content" name="content" required value="{{question.body}}"></ion-textarea>
+          </ion-item>
+          <div class="errorBox" *ngIf="myQuestion.controls['content'].hasError('required') && myQuestion.controls['content'].touched">
+            *There must be a description for your Question.
+          </div>
+          <div class="errorBox" *ngIf="myQuestion.controls['content'].hasError('minlength') && myQuestion.controls['content'].touched">
+            *The Description must be atleast 10 characters long.
+          </div>
+          <ion-item no-lines>
+            <button ion-button icon-right block [disabled]="!myQuestion.valid" type="submit">Publish
+              <ion-icon name="create"></ion-icon>
+            </button>
+          </ion-item>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

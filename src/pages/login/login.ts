@@ -71,8 +71,7 @@ export class LoginPage {
       },
       () => {
         this.app.removeLoader();
-        
-        this.navCtrl.setRoot(MenuPage);
+        this.navCtrl.setRoot(MenuPage,{token:user.api_token});
       }
       );
   }

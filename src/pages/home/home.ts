@@ -5,6 +5,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { QuestionPage } from "../question/question";
 import { AppServiceProvider } from '../../providers/app-service/app-service';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 //import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @Component({
@@ -19,15 +20,14 @@ export class HomePage {
   public latestId: any;
   public paginatedUrl: any;
   public pagination: any;
-  public scroll: any;
+  public scroll: any = null;
   public pageTitle: string;
   public questions = [];
   public pages: Array<{ url: any, title: any }>;
   public items = [];
   public errors: any;
   constructor(
-    //private userService: UserServiceProvider,
-    public app: AppServiceProvider, private http: Http,
+    public app: AppServiceProvider, private http: Http, private userService: UserServiceProvider,
     public navCtrl: NavController, public navParam: NavParams, ) {
 
   }
@@ -48,13 +48,21 @@ export class HomePage {
   }
   pushPage(uri: string) {
     this.app.setPageUri(uri);
-    this.navCtrl.push(QuestionPage);
+    this.navCtrl.push(QuestionPage, { token: this.navParam.get('token') });
   }
   ionViewWillEnter() {
     this.app.setPageUri('/questions');
     this.paginatedUrl = this.app.getPageUri();
     this.loadQuestions(this.paginatedUrl);
-    this.canWeLoadMoreContent=true;
+    this.canWeLoadMoreContent = true;
+    console.log('the user is loggedin');
+    this.userService.getToken().then((value) => {
+      console.log('the token is');
+      console.log(value);
+    });
+    if (this.scroll) {
+      this.scroll.enable(true);
+    }
 
   }
   /**
@@ -100,7 +108,7 @@ export class HomePage {
           if (this.pagesLeft(this.pagination) === null) {
             this.paginatedUrl = this.app.getPageUri();
             this.app.showToast('Nothing more', 'top');
-            this.canWeLoadMoreContent=false;
+            this.canWeLoadMoreContent = false;
             this.scroll.complete();
           }
         },

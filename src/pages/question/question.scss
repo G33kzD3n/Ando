@@ -7,6 +7,12 @@ page-question {
     .mytoast{
         padding-bottom: 40px;
     }
+    .edit-button{ 
+       display: inline-block;
+    }
+    .delete-button{
+      margin-left: .4em;
+    }
     #questionTitle{
         margin-top: .3em;
         color:#302f2f;
