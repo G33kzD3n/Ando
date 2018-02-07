@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class AppServiceProvider {
   private homePageTitle: string = "Dialogue";
-  private baseUri: string = "http://192.168.42.232:8000/api/1.0";
+  private baseUri: string = "http://192.168.225.108:8000/api/1.0";
   private pageUri: string = "";
   public loader: any;
   public options: any;

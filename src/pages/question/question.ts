@@ -44,14 +44,6 @@ export class QuestionPage {
     this.app.storage.get('username').then((value) => {
       setTimeout(() => {
         this.username = value;
-        if (this.navParams.get('token') != null && this.question.author_username === value) {
-          // this.enableComment = true; this.enableEditQuestion = true; 
-          //this.enableDeleteQuestion = true;
-        }
-        else {
-          // this.enableComment = true; this.enableEditQuestion = false; 
-          //this.enableDeleteQuestion = false;
-        }
       }, 80);
     });
   }
@@ -68,6 +60,9 @@ export class QuestionPage {
     modal.present();
     modal.onDidDismiss(message => {
       console.log(message);
+      setTimeout(() => {
+        this.app.showToast('Please go back to home and pull down to refresh..', 'top');
+      }, 800);
     });
   }
   /**
