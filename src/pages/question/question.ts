@@ -59,9 +59,8 @@ export class QuestionPage {
       });
     modal.present();
     modal.onDidDismiss(message => {
-      console.log(message);
       setTimeout(() => {
-        this.app.showToast('Please go back to home and pull down to refresh..', 'top');
+        this.app.showToast('Please go back to home page and pull down to refresh..', 'top');
       }, 800);
     });
   }
