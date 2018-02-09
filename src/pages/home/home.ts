@@ -6,6 +6,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { QuestionPage } from "../question/question";
 import { AppServiceProvider } from '../../providers/app-service/app-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
+import { ProfilePage } from '../profile/profile';
 //import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @Component({
@@ -44,12 +45,11 @@ export class HomePage {
    * Pushes The given page.
    * @param uri : string
    */
-  ngOnInit() {
-  }
   pushPage(uri: string) {
     this.app.setPageUri(uri);
     this.navCtrl.push(QuestionPage, { token: this.navParam.get('token') });
   }
+  
   ionViewWillEnter() {
     this.app.setPageUri('/questions');
     this.paginatedUrl = this.app.getPageUri();
@@ -74,8 +74,8 @@ export class HomePage {
     this.http.get(url)
       .map(res => res.json())
       .subscribe(result => {
-        this.questions = result[0].data;
-        this.pagination = result[0].pagination;
+        this.questions = result.data;
+        this.pagination = result.pagination;
         this.latestId = this.questions[0].id;
       },
       errors => {
@@ -103,8 +103,8 @@ export class HomePage {
       this.http.get(this.paginatedUrl)
         .map(res => res.json())
         .subscribe(result => {
-          this.pagination = result[0].pagination;
-          this.questions = this.questions.concat(result[0].data);
+          this.pagination = result.pagination;
+          this.questions = this.questions.concat(result.data);
           if (this.pagesLeft(this.pagination) === null) {
             this.paginatedUrl = this.app.getPageUri();
             this.app.showToast('Nothing more', 'top');
@@ -137,13 +137,13 @@ export class HomePage {
       .map(res => res.json())
       .subscribe(result => {
         this.paginatedUrl = this.app.getPageUri();
-        this.pagination = result[0].pagination;
-        if (this.latestId === result[0].data[0].id) {
+        this.pagination = result.pagination;
+        if (this.latestId === result.data[0].id) {
           console.log('nothing new');
           this.app.showToast('No new feeds!', 'top');
         }
         else {
-          this.questions = result[0].data;
+          this.questions = result.data;
           this.latestId = this.questions[0].id;
           this.scroll.enable(true);
         }
@@ -171,5 +171,9 @@ export class HomePage {
     else {
       return true;
     }
+  }
+
+  showProfile(username){
+    this.navCtrl.push(ProfilePage,{username:username});
   }
 }

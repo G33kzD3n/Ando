@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { ToastController, LoadingController, ModalController } from 'ionic-angular';
+import { ToastController, LoadingController} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 @Injectable()

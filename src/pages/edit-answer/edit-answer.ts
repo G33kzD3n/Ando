@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { AnswerServiceProvider } from '../../providers/answer-service/answer-service';
 import { ErrorServiceProvider } from '../../providers/error-service/error-service';
 import { AppServiceProvider } from '../../providers/app-service/app-service';

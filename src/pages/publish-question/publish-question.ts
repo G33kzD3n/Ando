@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Http, Headers } from "@angular/http";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppServiceProvider } from '../../providers/app-service/app-service';
-import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { QuestionServiceProvider } from '../../providers/question-service/question-service';
 import { ErrorServiceProvider } from '../../providers/error-service/error-service';
 
@@ -17,8 +15,8 @@ export class PublishQuestionPage {
   public myQuestion: FormGroup;
   public errormessage: string = "";
   constructor(
-    private userService: UserServiceProvider, private questionService: QuestionServiceProvider,
-    public error: ErrorServiceProvider, private app: AppServiceProvider, private http: Http,
+    private questionService: QuestionServiceProvider,
+    public error: ErrorServiceProvider, private app: AppServiceProvider,
     public navCtrl: NavController, public navParams: NavParams, public formbuilder: FormBuilder) {
     this.myQuestion = formbuilder.group({
       title: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
@@ -28,7 +26,7 @@ export class PublishQuestionPage {
   }
 
   ionViewDidLoad() {
-   
+
   }
   /**
    * Create a new Question.

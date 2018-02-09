@@ -15,7 +15,6 @@ export class ErrorServiceProvider {
       this.error.message = "Check your internet connection or Server is down.";
       this.error.status = errors.status;
     } else if(errors) {
-      let body = JSON.parse(errors._body);
       this.error.message = "Token incorrect.";
       this.error.status = errors.status;
     }

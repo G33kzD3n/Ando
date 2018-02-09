@@ -1,14 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, Nav, NavParams} from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 import { LoginPage } from "../login/login";
 import { SignupPage } from "../signup/signup";
-//import { ProfilePage } from '../profile/profile';
+import { ProfilePage } from '../profile/profile';
 import { PublishQuestionPage } from "../publish-question/publish-question";
 import { LogoutPage } from '../logout/logout';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
-import { AppServiceProvider } from '../../providers/app-service/app-service';
 import { MyQuestionsPage } from '../my-questions/my-questions';
 
 @IonicPage()
@@ -23,19 +22,18 @@ export class MenuPage {
   @ViewChild(Nav) nav: Nav;
   public rootPage: any;
   public pages: Array<{ title: string, component: any, icon: any }>;
-  constructor(public loadingCtrl: LoadingController,
-    private userService: UserServiceProvider, private app: AppServiceProvider,
-    public navCtrl: NavController, public navParam: NavParams,
-  ) {
-    
-  }
+  
+  constructor(
+    private userService: UserServiceProvider, public navParam: NavParams,
+    public navCtrl: NavController,  
+  ) {}
   showMenu(loggedIn) {
     if (loggedIn === true) {
       this.pages = [
         { title: 'Home', component: HomePage, icon: 'home' },
         { title: 'Publish Question', component: PublishQuestionPage, icon: 'add' },
         { title: 'My Questions', component: MyQuestionsPage, icon: 'add' },
-        { title: 'Profile', component: HomePage, icon: 'person' },
+        { title: 'Profile', component: ProfilePage, icon: 'person' },
         { title: 'Settings', component: HomePage, icon: 'settings' },
         { title: 'Logout', component: LogoutPage, icon: 'key' }
       ];
@@ -53,13 +51,13 @@ export class MenuPage {
       this.userService.getToken().then((value) => {
         this.nav.setRoot(HomePage, { token: value });
         this.token = value;
-        setTimeout(() => {   
+        setTimeout(() => {
           if (this.token != null) {
             this.showMenu(true);
           } else {
             this.showMenu(false);
           }
-        },3000);
+        }, 3000);
       });
     } catch (e) {
       //this.nav.setRoot(HomePage);

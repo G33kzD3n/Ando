@@ -6,15 +6,74 @@
     <ion-title>{{pageTitle}}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content class="card-background-page">
-    <ion-card>
-      <ion-card-content>
-        <ion-card-title>
-          Welcome {{user.name}}
-        </ion-card-title>
-        <p>
-          The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
-        </p>
-      </ion-card-content>
-    </ion-card>
-</ion-content> 
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-md-9>
+        <ion-card>
+          <ion-item class="username">
+            <h4 id="username-value">{{user.name | uppercase}}</h4>
+            <p>Joined as Member {{ user.joined }}.</p>
+          </ion-item>
+          <p class="">
+            <button class="edit-button" color="light" ion-button icon-only  (click)="editProfile(user)"
+            *ngIf="user.username===username">
+              <ion-icon name="create"></ion-icon>
+            </button>
+          </p>
+          <ion-card-content class="profile-content">
+            <ion-item>
+              <p class="labels">Known as:</p>
+              <p class="label-value">{{ user.username}}</p>
+            </ion-item>
+            <ion-item>
+              <p class="labels">
+                <ion-icon name="ios-link" start></ion-icon>
+              </p>
+              <h4 class="email">{{ user.email}}.</h4>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card >
+          <ion-card-content>
+           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates pariatur, sequi repudiandae in rerum, earum quis explicabo, corporis temporibus illum soluta cum iusto at ipsa impedit sapiente odit delectus.
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates pariatur, sequi repudiandae in rerum, earum quis
+            explicabo, corporis temporibus illum soluta cum iusto at ipsa impedit sapiente odit delectus.
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates pariatur, sequi repudiandae in rerum, earum quis
+            explicabo, corporis temporibus illum soluta cum iusto at ipsa impedit sapiente odit delectus.
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates pariatur, sequi repudiandae in rerum, earum quis
+            explicabo, corporis temporibus illum soluta cum iusto at ipsa impedit sapiente odit delectus.
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates pariatur, sequi repudiandae in rerum, earum quis
+            explicabo, corporis temporibus illum soluta cum iusto at ipsa impedit sapiente odit delectus.
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates pariatur, sequi repudiandae in rerum, earum quis
+            explicabo, corporis temporibus illum soluta cum iusto at ipsa impedit sapiente odit delectus.
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

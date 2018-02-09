@@ -26,7 +26,8 @@ import { PaginationServiceProvider } from '../providers/pagination-service/pagin
 import { QuestionServiceProvider } from '../providers/question-service/question-service';
 import { AnswerServiceProvider } from '../providers/answer-service/answer-service';
 import { EditAnswerPage } from "../pages/edit-answer/edit-answer";
-
+import { ProfileServiceProvider } from '../providers/profile-service/profile-service';
+import { EditProfilePage } from "../pages/edit-profile/edit-profile";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { EditAnswerPage } from "../pages/edit-answer/edit-answer";
     MyQuestionsPage,
     LogoutPage,
     EditQuestionPage,
-    EditAnswerPage
+    EditAnswerPage,
+    EditProfilePage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ import { EditAnswerPage } from "../pages/edit-answer/edit-answer";
     MyQuestionsPage,
     LogoutPage,
     EditQuestionPage,
-    EditAnswerPage
+    EditAnswerPage,
+    EditProfilePage
 
   ],
   providers: [
@@ -76,6 +79,7 @@ import { EditAnswerPage } from "../pages/edit-answer/edit-answer";
     ErrorServiceProvider,
     QuestionServiceProvider,
     AnswerServiceProvider,
+    ProfileServiceProvider,
   ]
 })
 export class AppModule { }

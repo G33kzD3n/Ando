@@ -25,7 +25,7 @@
          <a href="https://dialogue/channels/laravel " > Laravel</a>
           <a class='Time' href="{{Url}}questions/{{question['id']}}" >
             {{question['published_at'] | timeAgo }}</a> <a id='By'> By</a>
-        <a id='username' color='green' href="{{question.author_username}}">{{question['author_name'] | uppercase}}</a>
+        <a id='username' color='green' (click)="showProfile(question['author_username'])">{{question['author_name'] | uppercase}}</a>
         </p>
     </h4>
     <p id='question_body'>

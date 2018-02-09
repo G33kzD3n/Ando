@@ -1,12 +1,8 @@
 import { Component, Injectable } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { AppServiceProvider } from '../../providers/app-service/app-service';
-import { UserServiceProvider } from '../../providers/user-service/user-service';
-
-
-import { QuestionPage } from '../question/question';
 import { QuestionServiceProvider } from '../../providers/question-service/question-service';
 import { ErrorServiceProvider } from '../../providers/error-service/error-service';
 
@@ -23,8 +19,7 @@ export class EditQuestionPage {
   public myQuestion: FormGroup;
   constructor(
     public navCtrl: NavController, public navParams: NavParams, private app: AppServiceProvider,
-    public questionService: QuestionServiceProvider, private error :ErrorServiceProvider,
-    private userService: UserServiceProvider, public viewCtrl: ViewController, public formbuilder: FormBuilder) {
+    public questionService: QuestionServiceProvider, private error :ErrorServiceProvider,public viewCtrl: ViewController, public formbuilder: FormBuilder) {
     this.question = this.navParams.get('question');
     this.token = this.navParams.get('token');
     console.log(this.question);

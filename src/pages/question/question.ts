@@ -1,10 +1,9 @@
 import 'rxjs/add/operator/map';
-import { Http, Headers } from "@angular/http";
+import { Http} from "@angular/http";
 import { Component, Injectable } from '@angular/core';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import { AppServiceProvider } from '../../providers/app-service/app-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { EditQuestionPage } from '../edit-question/edit-question';
 import { ErrorServiceProvider } from '../../providers/error-service/error-service';
@@ -12,6 +11,7 @@ import { AnswerServiceProvider } from '../../providers/answer-service/answer-ser
 import { QuestionServiceProvider } from '../../providers/question-service/question-service';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { EditAnswerPage } from "../edit-answer/edit-answer";
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @IonicPage()
 @Injectable()
@@ -31,7 +31,8 @@ export class QuestionPage {
 
   constructor(
     public answerService: AnswerServiceProvider, public questionService: QuestionServiceProvider,
-    private userService: UserServiceProvider, public error: ErrorServiceProvider, private app: AppServiceProvider,
+    public error: ErrorServiceProvider, private app: AppServiceProvider,
+    private userService:UserServiceProvider,
     private http: Http, public modalCtrl: ModalController, private alertCtrl: AlertController, public formbuilder: FormBuilder,
     public navCtrl: NavController, public navParams: NavParams) {
 
@@ -41,7 +42,7 @@ export class QuestionPage {
   }
   ionViewDidLoad() {
     this.load();
-    this.app.storage.get('username').then((value) => {
+    this.userService.storage.get('username').then((value) => {
       setTimeout(() => {
         this.username = value;
       }, 80);
@@ -62,6 +63,7 @@ export class QuestionPage {
       setTimeout(() => {
         this.app.showToast('Please go back to home page and pull down to refresh..', 'top');
       }, 800);
+      this.load();
     });
   }
   /**
@@ -193,8 +195,8 @@ export class QuestionPage {
   public load() {
     this.http.get(this.app.getPageUri())
       .map(res => res.json())
-      .subscribe(res => {
-        this.question = res[0].data;
+      .subscribe(result => {
+        this.question = result.data;
       });
   }
 }
