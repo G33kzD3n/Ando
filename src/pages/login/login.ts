@@ -22,7 +22,7 @@ export class LoginPage {
 
 
   constructor(public navCtrl: NavController, public navParam: NavParams, public formbuilder: FormBuilder,
-   private app: AppServiceProvider, private userService: UserServiceProvider, ) {
+    private app: AppServiceProvider, private userService: UserServiceProvider, ) {
     this.loginForm = formbuilder.group({
       "email": ['', Validators.compose([Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)])],
       "password": ['', Validators.compose([Validators.required, Validators.minLength(8)])],
@@ -52,27 +52,27 @@ export class LoginPage {
     this.app.http.post(this.app.getUri() + '/login', payload, options)
       .map(res => res.json())
       .subscribe(
-      result => {
-        result;
-        user = result.data;
-        this.userService.setToken(user.api_token);
-        this.userService.storage.set('id', user.id);
-        this.userService.storage.set('username', user.user_name);
-      },
-      errors => {
-        retData = JSON.parse(errors._body);
-        console.log(retData);
-        if (retData) {
+        result => {
+          result;
+          user = result.data;
+          this.userService.setToken(user.api_token);
+          this.userService.storage.set('id', user.id);
+          this.userService.storage.set('username', user.user_name);
+        },
+        errors => {
+          retData = JSON.parse(errors._body);
+          console.log(retData);
+          if (retData) {
+            this.app.removeLoader();
+            setTimeout(() => {
+              this.app.showToast('The Email and password you entered didn\'t match our records', 'top');
+            }, 100);
+          }
+        },
+        () => {
           this.app.removeLoader();
-          setTimeout(() => {
-            this.app.showToast('The Email and password you entered didn\'t match our records', 'top');
-          }, 100);
+          this.navCtrl.setRoot(MenuPage, { token: user.api_token });
         }
-      },
-      () => {
-        this.app.removeLoader();
-        this.navCtrl.setRoot(MenuPage,{token:user.api_token});
-      }
       );
   }
   forgotPassword(): void {
