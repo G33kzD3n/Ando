@@ -35,13 +35,13 @@ export class SignupPage {
       ])],
       "password": ['', Validators.compose([
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(6),
         Validators.maxLength(10),
         // Validators.pattern(/[0-9]*/)
       ])],
       "confirmPassword": ['', Validators.compose([
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(6),
         Validators.maxLength(10),
         // Validators.pattern(/[0-9]*/)
       ])],
@@ -70,7 +70,7 @@ export class SignupPage {
         errors => {
           this.app.removeLoader();
           let retData = JSON.parse(errors._body);
-          // this.app.showToast(this.parseErrors(retData), 'top');
+          this.app.showToast(this.parseErrors(retData.errors.email), 'top');
         },
         () => {
           this.app.removeLoader();
