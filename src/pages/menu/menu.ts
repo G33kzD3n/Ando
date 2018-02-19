@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, NavParams} from 'ionic-angular';
+import { IonicPage, NavController, Nav, NavParams } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 import { LoginPage } from "../login/login";
@@ -22,11 +22,11 @@ export class MenuPage {
   @ViewChild(Nav) nav: Nav;
   public rootPage: any;
   public pages: Array<{ title: string, component: any, icon: any }>;
-  
+
   constructor(
     private userService: UserServiceProvider, public navParam: NavParams,
-    public navCtrl: NavController,  
-  ) {}
+    public navCtrl: NavController,
+  ) { }
   showMenu(loggedIn) {
     if (loggedIn === true) {
       this.pages = [
@@ -57,7 +57,7 @@ export class MenuPage {
           } else {
             this.showMenu(false);
           }
-        }, 3000);
+        }, 300);
       });
     } catch (e) {
       //this.nav.setRoot(HomePage);

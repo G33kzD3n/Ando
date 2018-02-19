@@ -1,5 +1,5 @@
 import 'rxjs/add/operator/map';
-import { Http} from "@angular/http";
+import { Http } from "@angular/http";
 import { Component, Injectable } from '@angular/core';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import { AppServiceProvider } from '../../providers/app-service/app-service';
@@ -12,6 +12,7 @@ import { QuestionServiceProvider } from '../../providers/question-service/questi
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { EditAnswerPage } from "../edit-answer/edit-answer";
 import { UserServiceProvider } from '../../providers/user-service/user-service';
+import { ProfilePage } from '../profile/profile';
 
 @IonicPage()
 @Injectable()
@@ -32,7 +33,7 @@ export class QuestionPage {
   constructor(
     public answerService: AnswerServiceProvider, public questionService: QuestionServiceProvider,
     public error: ErrorServiceProvider, private app: AppServiceProvider,
-    private userService:UserServiceProvider,
+    private userService: UserServiceProvider,
     private http: Http, public modalCtrl: ModalController, private alertCtrl: AlertController, public formbuilder: FormBuilder,
     public navCtrl: NavController, public navParams: NavParams) {
 
@@ -97,17 +98,17 @@ export class QuestionPage {
     };
     this.answerService.store(this.app.getPageUri(), payload, this.navParams.get('token'))
       .subscribe(
-      result => { console.log(result); },
-      errors => {
-        this.app.removeLoader();
-        this.app.showToast(this.error.errorMessageIs(this.error.parseErrors(errors)), 'top');
-        console.log(errors);
-      },
-      () => {
-        this.app.removeLoader();
-        this.app.showToast('Answer posted successfully!', 'top');
-        this.navCtrl.pop();
-      });
+        result => { console.log(result); },
+        errors => {
+          this.app.removeLoader();
+          this.app.showToast(this.error.errorMessageIs(this.error.parseErrors(errors)), 'top');
+          console.log(errors);
+        },
+        () => {
+          this.app.removeLoader();
+          this.app.showToast('Answer posted successfully!', 'top');
+          this.navCtrl.pop();
+        });
   }
   /**
    * Delete Question
@@ -131,17 +132,17 @@ export class QuestionPage {
             this.app.showLoader('Wait your question is being removed...');
             this.questionService.delete(this.app.getPageUri(), this.navParams.get('token'))
               .subscribe(
-              result => { console.log(result); },
-              errors => {
-                this.app.removeLoader();
-                this.app.showToast(this.error.errorMessageIs(this.error.parseErrors(errors)), 'top');
-                console.log(errors);
-              },
-              () => {
-                this.app.removeLoader();
-                this.app.showToast('Question removed successfully!', 'top');
-                this.navCtrl.pop();
-              });
+                result => { console.log(result); },
+                errors => {
+                  this.app.removeLoader();
+                  this.app.showToast(this.error.errorMessageIs(this.error.parseErrors(errors)), 'top');
+                  console.log(errors);
+                },
+                () => {
+                  this.app.removeLoader();
+                  this.app.showToast('Question removed successfully!', 'top');
+                  this.navCtrl.pop();
+                });
           }
         }
       ]
@@ -172,17 +173,17 @@ export class QuestionPage {
             let uri = this.app.getPageUri() + '/answers/' + answer.answer_id;
             this.answerService.delete(uri, this.navParams.get('token'))
               .subscribe(
-              result => { console.log(result); },
-              errors => {
-                this.app.removeLoader();
-                this.app.showToast(this.error.errorMessageIs(this.error.parseErrors(errors)), 'top');
-                console.log(errors);
-              },
-              () => {
-                this.app.removeLoader();
-                this.app.showToast('Answer removed successfully!', 'top');
-                this.navCtrl.pop();
-              });
+                result => { console.log(result); },
+                errors => {
+                  this.app.removeLoader();
+                  this.app.showToast(this.error.errorMessageIs(this.error.parseErrors(errors)), 'top');
+                  console.log(errors);
+                },
+                () => {
+                  this.app.removeLoader();
+                  this.app.showToast('Answer removed successfully!', 'top');
+                  this.navCtrl.pop();
+                });
           }
         }
       ]
@@ -190,7 +191,9 @@ export class QuestionPage {
     alert.present();
 
   }
-
+  // showProfile(question) {
+  //   this.navCtrl.push(ProfilePage, { username: question.author_username });
+  // }
 
   public load() {
     this.http.get(this.app.getPageUri())

@@ -12,12 +12,11 @@
       <ion-col col-md-9>
         <ion-card>
           <ion-item class="username">
-            <h4 id="username-value">{{user.name | uppercase}}</h4>
+            <h4 id="username-value">{{user.name | uppercase}} Xp{{user.karma}}</h4>
             <p>Joined as Member {{ user.joined }}.</p>
           </ion-item>
           <p class="">
-            <button class="edit-button" color="light" ion-button icon-only  (click)="editProfile(user)"
-            *ngIf="user.username===username">
+            <button class="edit-button" color="light" ion-button icon-only (click)="editProfile(user)" *ngIf="user.username===username">
               <ion-icon name="create"></ion-icon>
             </button>
           </p>
@@ -38,9 +37,10 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-card >
+        <ion-card>
           <ion-card-content>
-           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates pariatur, sequi repudiandae in rerum, earum quis explicabo, corporis temporibus illum soluta cum iusto at ipsa impedit sapiente odit delectus.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste voluptates pariatur, sequi repudiandae in rerum, earum quis
+            explicabo, corporis temporibus illum soluta cum iusto at ipsa impedit sapiente odit delectus.
           </ion-card-content>
         </ion-card>
         <ion-card>
